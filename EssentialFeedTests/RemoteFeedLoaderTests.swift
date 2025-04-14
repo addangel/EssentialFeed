@@ -10,27 +10,37 @@ import XCTest
 
 class RemoteFeedLoader {
     func load() {
-        HTTPClient.shared.requestedURL = URL(string: "https://google.com")!
+        HTTPClient.shared.get(from: URL(string: "https://google.com")!)
     }
 }
 
 class HTTPClient {
-    static let shared = HTTPClient()
-    
-    private init() {}
+    static var shared = HTTPClient()
+        
+    func get(from url: URL) {}
+}
+
+class HTTPClientSpy: HTTPClient {
     var requestedURL: URL?
+
+    override func get(from url: URL) {
+        requestedURL = url
+    }
 }
 
 class RemoteFeedLoaderTests: XCTestCase {
    
     func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClient.shared
+        let client = HTTPClientSpy()
+        HTTPClient.shared = client
+        
                 
         XCTAssertNil(client.requestedURL)
     }
     
     func test_load_requestsDataFromURL() {
-        let client = HTTPClient.shared
+        let client = HTTPClientSpy()
+        HTTPClient.shared = client
         let sut = RemoteFeedLoader()
         
         sut.load()
