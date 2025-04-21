@@ -89,11 +89,10 @@ class RemoteFeedLoaderTests: XCTestCase {
             location: "a location",
             imageURL: URL(string: "http://another-url.com")!)
         
-        let itemsJSON = ["items": [item1.json, item2.json]]
         let items = [item1.model, item2.model]
 
         expect(sut, toCompleteWith: .success(items), when: {
-            let json = try! JSONSerialization.data(withJSONObject: itemsJSON)
+            let json = makeItemsJSON([item1.json, item2.json])
             client.complete(withStatusCode: 200, data: json)
         })
     }
@@ -119,6 +118,12 @@ class RemoteFeedLoaderTests: XCTestCase {
         ].compactMapValues { $0 }
 
         return (item, json)
+    }
+    
+    private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
+        let json = ["items": items]
+        
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     private func expect(_ sut: RemoteFeedLoader, toCompleteWith result: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
