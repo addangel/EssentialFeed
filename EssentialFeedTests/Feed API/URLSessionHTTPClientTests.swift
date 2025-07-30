@@ -26,7 +26,6 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_getFromURL_performsGETRequestWithURL() {
-        
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
         exp.assertForOverFulfill = false
@@ -76,7 +75,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual(receivedValues?.response.statusCode, response.statusCode)
     }
     
-    func test_getFromURL_succeedsWithEMptyDataOnHTTPURLResponseWithNilData() {
+    func test_getFromURL_succeedsWithEmptyDataOnHTTPURLResponseWithNilData() {
         let response = anyHTTPURLResponse()
         
         let receivedValues = resultValuesFor(data: nil, response: response, error: nil)
@@ -184,7 +183,6 @@ class URLSessionHTTPClientTests: XCTestCase {
         
         override class func canInit(with request: URLRequest) -> Bool {
             return true
-            
         }
         
         override class func canonicalRequest(for request: URLRequest) -> URLRequest {
