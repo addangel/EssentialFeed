@@ -38,9 +38,9 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_requestsCacheDeletion() {
-        let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
+        
         let items = [uniqueItem(), uniqueItem()]
+        let (sut, store) = makeSUT()
         
         sut.save(items)
         
@@ -48,6 +48,12 @@ class CacheFeedUseCaseTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT() -> (sut: LocalFeedLoader, store: FeedStore) {
+        let store = FeedStore()
+        let sut = LocalFeedLoader(store: store)
+        return (sut, store)
+    }
     
     private func uniqueItem() -> FeedItem {
         FeedItem(id: UUID(),
