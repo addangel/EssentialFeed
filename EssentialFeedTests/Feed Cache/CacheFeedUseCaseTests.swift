@@ -11,8 +11,7 @@ import EssentialFeed
 class CacheFeedUseCaseTests: XCTestCase {
     
     func test_init_doesNotMessageStoreUponCreation() {
-        let store = FeedStoreSpy()
-        _ = LocalFeedLoader(store: store, currentDate: { Date() })
+        let (_, store) = makeSUT()
         
         XCTAssertEqual(store.receivedMessages, [])
     }
