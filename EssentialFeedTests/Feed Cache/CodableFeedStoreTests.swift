@@ -8,7 +8,7 @@
 import XCTest
 import EssentialFeed
 
-class CodableFeedStoreTests: XCTestCase {
+class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
     
     override func setUp() {
         super.setUp()
@@ -87,7 +87,7 @@ class CodableFeedStoreTests: XCTestCase {
         
         let insertionError = insert((uniqueImageFeed().local, Date()), into: sut)
         
-        XCTAssertNil(insertionError, "Expected to insert cache successfully")
+        XCTAssertNil(insertionError, "Expected to override cache successfully")
     }
     
     func test_insert_overridesPreviouslyInsertedCacheValues() {
